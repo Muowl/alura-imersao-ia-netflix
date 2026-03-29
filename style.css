@@ -81,18 +81,118 @@ h1 {
     }
 }
 
-/* Responsividade adaptativa para uso em dispositivos menores e mais curtos (por exemplo Smartphones ou Tablets minimizados) */
-@media screen and (max-width: 768px) { /* Só acione os blocos abaixo caso a tela tenha 768px pra menos (Abaixo do iPad) */
-    h1 {
-        font-size: 2.5rem; /* Diminui o letreiro principal para evitar que as palavras se amontoem numa quebra bizarra da palavra. */
-    }
-    
-    .profile {
-        gap: 1.5rem; /* Reduz drasticamente de uso de tela proporcional ('vw') para a escala de fixos estáticos em Rem */
-        flex-wrap: wrap; /* Muito importante! Com pouca largura, e caso mais perfis sejam inclusos amanhã, este comandão permite pular linha num display flex, adaptativo empilhando */
-    }
+/* ---- Responsividade para diferentes tipos de dispositivos/telas ---- */
 
+/* Monitores grandes ou TVs (1440px ou mais) */
+@media screen and (min-width: 1440px) {
+    h1 {
+        font-size: 4.5rem; /* Aumenta o título para preencher bem telas enormes */
+    }
+    .profile a img {
+        width: 12vw; /* Mantém as proporções da imagem alinhadas para não ficarem colossais demais na tela */
+        max-width: 250px; /* Aumenta o limite máximo de esticamento da TV */
+    }
     .profile a span {
-        font-size: 1.2rem; /* Mantem as fontes sub descritivas perfeitamente legíveis sem forçar margem */
+        font-size: 2rem; /* Aumenta a fonte do nome para acompanhar a tela e a distância de leitura na sala */
+    }
+}
+
+/* Tablets ou Telas Médias de Notebooks (até 1024px) */
+@media screen and (max-width: 1024px) {
+    h1 {
+        font-size: 3rem; /* Reduz um pouco o título principal em relação aos monitores tradicionais */
+    }
+    .profile {
+        gap: 3vw; /* Ajusta o espaçamento para ficar coerente com a largura do tablet */
+    }
+    .profile a img {
+        width: 20vw; /* As imagens ocupam uma fatia maior do painel visual num tablet solto na mão */
+    }
+}
+
+/* Smartphones / Celulares comuns (até 768px) */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem; /* Diminui o letreiro principal para caber no celular sem quebrar a linha das palavras bizarramente */
+    }
+    .profile {
+        gap: 1.5rem; /* Troca o espaçamento baseado na tela por um valor estático para não bugar telas sensíveis */
+        flex-wrap: wrap; /* Se os próximos perfis não couberem na linha, eles automaticamente quebram e formam uma fileira embaixo */
+    }
+    .profile a img {
+        width: 30vw; /* Os ícones se recusam a ficar tão pequenos assim que chegam a telas mobile por ter menos horizonte visual */
+        min-width: 110px; /* Garante que a área de toque para o dedão seja sempre no mínimo de 110px */
+    }
+    .profile a span {
+        font-size: 1.2rem; /* Mantém a legibilidade da fonte descritiva perfeitamente em telas médias mobile */
+    }
+}
+
+/* Smartphones muito pequenos ou de polegadas menores (até 480px) */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2rem; /* Texto ainda mais apertadinho para não explodir em resoluções mais finas em pé */
+        margin-bottom: 1.5rem; /* Fecha um pouco a distância do texto pros avatares */
+    }
+    .profile {
+        gap: 1rem; /* Espaço mais curtinho entre os blocos dos vários possíveis perfis empilhados nesa tela fina */
+    }
+    .profile a img {
+        width: 40vw; /* Deixa a área da foto/touch gorda o suficiente para facilitar o clique dos dedos numa telinha pequena real */
+    }
+    .profile a span {
+        font-size: 1rem; /* Diminui levemente o nome do perfil para que não ocorram colisões de elementos vizinhos */
+    }
+}
+
+
+
+/* ---- Tema Claro (Light Mode) ---- */
+body.light-mode {
+    background-color: #f5f5f5; /* Fundo mais claro */
+    color: #333; /* Texto escuro */
+}
+
+body.light-mode .profile a img {
+    border-color: transparent; /* Mantém a borda invisível */
+}
+
+body.light-mode .profile a span {
+    color: #666; /* Cinza médio clássico em fundos brancos */
+}
+
+/* No tema claro, vamos trocar o brilho branco do hover pelo vermelho autêntico da Netflix! */
+body.light-mode .profile li a:hover img,
+body.light-mode .profile li a:focus img {
+    border-color: #e50914; 
+}
+
+body.light-mode .profile li a:hover span,
+body.light-mode .profile li a:focus span {
+    color: #e50914; 
+}
+
+/* ---- Estilo do botão Flutuante de Troca de Tema ---- */
+.theme-toggle {
+    position: absolute; /* Desprende do layout para flutuar no canto da tela */
+    top: 2rem; /* Distância do teto superior */
+    right: 3rem; /* Distância da extremidade direita */
+    background: transparent; /* Remove o fundo nativo de botões de navegador */
+    border: none; /* Sem contornos */
+    font-size: 2rem; /* Aumenta o tamanho do Emoji de Sol/Lua */
+    cursor: pointer; /* Mouse vira uma mãozinha clicável */
+    transition: transform 0.3s ease; /* Anima o botão em sim mesmo ao passar o mouse */
+    z-index: 100; /* Mantém botão elevado caso a foto de um perfil chegue perto */
+}
+
+.theme-toggle:hover {
+    transform: scale(1.15); /* Efeito de balão (Zoom) no Emoji */
+}
+
+@media screen and (max-width: 768px) {
+    .theme-toggle {
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 1.5rem; /* Fica menor em celulares para não invadir o texto "Quem está Assistindo" */
     }
 }
