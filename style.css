@@ -1,0 +1,98 @@
+* {
+    margin: 0; /* Remove a margem padrão externa dos elementos */
+    padding: 0; /* Remove o espaçamento padrão interno dos elementos */
+    box-sizing: border-box; /* Garante que bordas e paddings não aumentem o tamanho total do elemento, facilitando o layout */
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Define a fonte padrão parecida com a da Netflix */
+    background-color: #141414; /* Cor de fundo cinza super escuro (padrão Netflix) */
+    color: #fff; /* Cor do texto em branco para dar contraste com o fundo escuro */
+    display: flex; /* Ativa o Flexbox para organizar os elementos filhos no corpo da página */
+    justify-content: center; /* Centraliza o conteúdo (o 'main') horizontalmente na tela */
+    align-items: center; /* Centraliza o conteúdo verticalmente na tela */
+    height: 100vh; /* Faz o corpo da página ocupar 100% da altura visível da tela (viewport) */
+}
+
+main {
+    text-align: center; /* Centraliza qualquer texto que esteja solto dentro da tag main (como o h1) */
+    animation: fadeIn 0.8s ease-out; /* Aplica a uma animação chamada 'fadeIn' que dura 0.8s terminando suavemente */
+}
+
+h1 {
+    font-size: 3.5rem; /* Ajusta o tamanho do título principal para ficar grande e legível */
+    font-weight: 400; /* Deixa o peso da fonte mais leve, para não ficar em negrito pesado */
+    margin-bottom: 2rem; /* Cria um espaço ('respiro') abaixo do título para se separar dos avatares */
+}
+
+.profile {
+    display: flex; /* Transforma a lista de perfis num elemento Flexbox para alinhá-los em fileira */
+    justify-content: center; /* Centraliza os perfis no meio da tela */
+    list-style: none; /* Remove as bolinhas/pontinhos laterais que vêm por padrão nas listas <ul> */
+    gap: 2vw; /* Cria um espaçamento entre cada perfil usando 2% da largura da tela (Viewport Width) */
+}
+
+.profile li a {
+    display: flex; /* Ativa flexbox individualmente para o agrupamento do link (imagem + nome do perfil) */
+    flex-direction: column; /* Empilha a imagem e o nome, colocando a imagem em cima e o texto embaixo */
+    align-items: center; /* Centraliza a imagem e o texto horizontalmente dentro do próprio espaço */
+    text-decoration: none; /* Remove aquele típico sublinhado padrão dos links HTML */
+    outline: none; /* Remove a borda azul padrão que alguns navegadores aplicam ao focar pelo teclado */
+}
+
+.profile a img {
+    width: 15vw; /* A largura do avatar da imagem se ajusta automaticamente a 15% do tamanho da tela */
+    max-width: 200px; /* Trava o tamanho. Impede que a imagem fique absurdamente grande (como numa TV/monitor) */
+    min-width: 100px; /* Trava o tamanho. Impede que a imagem fique microscópica na tela do celular */
+    border-radius: 4px; /* Arredonda bem levemente os cantos quadradões tradicionais da imagem */
+    border: 3px solid transparent; /* Cria uma 'borda invisível' inicialmente. Se não tivéssemos essa margem invisível transparente, o layout empurraria tudo e a tela 'tremeria' ao adicionar as bordas no menu do Hover. */
+    transition: border-color 0.3s ease, transform 0.3s ease; /* Informa para trocar a cor e aplicar o zoom numa transição bem gradativa de 0.3s (nada abrupto) */
+}
+
+.profile a span {
+    color: #808080; /* Cor inicial do nome do perfil (cinza escuro) */
+    font-size: 1.5rem; /* Tamanho da fonte do nome do perfil */
+    margin-top: 0.8rem; /* Cria um vão separando a parte de baixo da imagem pro nome do perfil */
+    transition: color 0.3s ease; /* Mesma ideia do outro transition: ensina para trocar a cor do span do nome numa transição gradativa (como no hover abaixo) */
+}
+
+/* ---- Efeito de hover da Netflix (borda na imagem, zoom e iluminação no texto) ---- */
+.profile li a:hover img, /* Quando o botão do mouse entra/passar pelo espaço total da "li/a", então afete o alvo interno 'img' */
+.profile li a:focus img { /* Faz o mesmo se o usuário selecionar pelo 'TAB' no teclado focado no perfil */
+    border-color: #fff; /* Troca aquela borda transparente predefinida por uma branca! */
+    transform: scale(1.05); /* Aplica o famoso zoom in: cresce o avatar em 5% a mais visivelmente para fora */
+}
+
+.profile li a:hover span, /* Quando o botão do mouse parar no link total... */
+.profile li a:focus span { /* Quando o foco entra com o uso de atalhos... */
+    color: #fff; /* Modifica o cinza escuro de #808080 e usa esse branco #fff, causando o efeito legal de brilho no nome */
+}
+
+
+/* ---- Animação suave de entrada que faz parte da Netflix ao carregar a página inicialmente ---- */
+@keyframes fadeIn {
+    0% { /* 0% Significa "No começo..."/Início da página  */
+        opacity: 0; /* Inicia a total estrutura 100% invisível por natureza (Sem opacidade) */
+        transform: scale(1.1); /* Começa a animação em uma versão 10% maior que o tamanho real */
+    }
+    100% { /* Final da Animação... */
+        opacity: 1; /* Elevação até ficar transparente para aparecer total normal */
+        transform: scale(1); /* Diminui esse transform scale maior da linha interior até atingir 1 = tamanho real final no layout */
+    }
+}
+
+/* Responsividade adaptativa para uso em dispositivos menores e mais curtos (por exemplo Smartphones ou Tablets minimizados) */
+@media screen and (max-width: 768px) { /* Só acione os blocos abaixo caso a tela tenha 768px pra menos (Abaixo do iPad) */
+    h1 {
+        font-size: 2.5rem; /* Diminui o letreiro principal para evitar que as palavras se amontoem numa quebra bizarra da palavra. */
+    }
+    
+    .profile {
+        gap: 1.5rem; /* Reduz drasticamente de uso de tela proporcional ('vw') para a escala de fixos estáticos em Rem */
+        flex-wrap: wrap; /* Muito importante! Com pouca largura, e caso mais perfis sejam inclusos amanhã, este comandão permite pular linha num display flex, adaptativo empilhando */
+    }
+
+    .profile a span {
+        font-size: 1.2rem; /* Mantem as fontes sub descritivas perfeitamente legíveis sem forçar margem */
+    }
+}
